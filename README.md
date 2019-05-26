@@ -1,5 +1,5 @@
 # Neuro-Evolution Steering
-Using **Genetic Algorithms** and **Neural Networks**, a car can teach itself to drive around a track (any track).  
+Using **Genetic Algorithms** and **Neural Networks** ([check out NEAT](https://en.wikipedia.org/wiki/Neuroevolution_of_augmenting_topologies)), a car can teach itself to drive around a track (any track).  
 The track is divided into **checkpoints** that rewards the car for crossing it.  
 Once a generation has either completed or died, using **mutation**, the next generation is spawned with **slight variation** in each member.  
 In order to avoid overfitting, the track is randomised (kind of) using [Perlin noise.](https://en.wikipedia.org/wiki/Perlin_noise)  
