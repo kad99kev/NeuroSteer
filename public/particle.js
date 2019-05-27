@@ -20,6 +20,7 @@ class Particle{
     this.dead = false;
     this.index = 1;
     this.counter = 0;
+    this.laps = 0;
     for(let a = -this.fov; a < this.fov; a += 36){
       this.rays.push(new Ray(this.pos, radians(a)));
     }
@@ -50,7 +51,10 @@ class Particle{
       this.index = (this.index + 1) % checkpoints.length;
       this.fitness++;
       this.counter = 0;
-      if(this.fitness == totPoints * 5){
+      if(this.index == checkpoints.length - 1){
+        this.laps += 1;
+      }
+      if(this.laps == totLaps){
         this.finished = true;
       }
     }

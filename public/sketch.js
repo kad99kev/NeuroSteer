@@ -10,7 +10,7 @@ let canWid = 800; let canHei = 600;
 let population = [];
 let savedParticles = [];
 
-const TOTAL = 50; const mutateRate = 0.1;
+const TOTAL = 100; const mutateRate = 0.1;
 
 let speedSlider;
 
@@ -19,6 +19,8 @@ let bestCar = null; let runBest = false; let bestCarButton; let carCopy;
 let inside; let outside; let checkpoints;
 
 const totPoints = 30; const LIFESPAN = 100;
+
+let laps = 0; let lapTxt; let totLaps = 10;
 
 function setup(){
   createCanvas(canWid, canHei).parent('sketch-holder');
@@ -31,16 +33,23 @@ function setup(){
     savedParticles[i] = population[i];
   }
 
-  speedSlider = createSlider(1, 10, 1);
-
   bestCarButton = createButton("Run Best Car").parent('button');
   bestCarButton.mousePressed(toggleBest);
+
+  lapTxt = select('#laps');
+  lapTxt.html(laps + '/' + totLaps);
+
+  speedSlider = select('#speedSlider');
+  speedSpan = select('#speed');
+
   bestCar = new Particle();
 }
 
 function draw(){
   const cycles = speedSlider.value();
   background(0);
+
+  speedSpan.html(cycles);
 
   for(let wall of walls){
     wall.display();
@@ -64,8 +73,26 @@ function draw(){
   for(let n = 0; n < cycles; n++){
     if(!runBest){
       for(let particle of population){
-        if(carCopy == null || particle.fitness > carCopy.fitness){
-          carCopy = particle;
+        if(particle.fitness > bestCar.fitness){
+          try{
+            bestCar.dispose();
+            console.log("Brain successfully disposed");
+            console.log("Total number of tensors => " + tf.memory().numTensors);
+          }
+          catch (err){
+            console.log(err);
+          }
+          try{
+            bestCar.fitness = particle.fitness;
+            bestCar.brain = particle.brain.copy();
+            console.log("Brain successfully copied");
+          }
+          catch (err){
+            console.log(err);
+          }
+        }
+        if(particle.laps > laps){
+          laps = particle.laps;
         }
         particle.look(walls);
         particle.check(checkpoints);
@@ -82,26 +109,13 @@ function draw(){
       }
 
       if(population.length == 0){
-        try{
-          bestCar.brain.dispose();
-          console.log("Brain successfully disposed");
-          console.log("Total number of tensors => " + tf.memory().numTensors);
-        }
-        catch (err){
-          console.log(err);
-        }
-        try{
-          bestCar.brain = carCopy.brain.copy();
-          console.log("Brain successfully copied");
-        }
-        catch (err){
-          console.log(err);
-        }
         buildTrack();
         nextGeneration();
       }
+      lapTxt.html(laps + '/' + totLaps);
     }
     else{
+      laps = bestCar.laps;
       bestCar.look(walls);
       bestCar.check(checkpoints);
       bestCar.update();
@@ -109,10 +123,10 @@ function draw(){
       bestCar.display();
 
       if(bestCar.dead || bestCar.finished){
-        bestCar.dispose();
         toggleBest();
       }
     }
+    lapTxt.html(laps + '/' + totLaps);
   }
 }
 
@@ -138,6 +152,7 @@ function buildTrack(){
     inside.push(createVector(x1, y1));
     outside.push(createVector(x2, y2));
     checkpoints.push(new Boundary(x1, y1, x2, y2));
+    laps = 0;
   }
 
   for(let i = 0; i < totPoints; i++){
@@ -177,4 +192,8 @@ function resetSketch(){
   background(0);
   buildTrack();
   bestCar.pos.set(start);
+  bestCar.laps = 0;
+  bestCar.counter = 0;
+  bestCar.finished = false;
+  bestCar.dead = false;
 }

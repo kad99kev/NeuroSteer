@@ -5,7 +5,7 @@ function nextGeneration(){
     population[i] = pickOne(savedParticles);
   }
   for(let i = 0; i < TOTAL; i++){
-    savedParticles[i].dispose(); 
+    savedParticles[i].dispose();
   }
   savedParticles = [];
   savedParticles = [...population];
