@@ -14,5 +14,5 @@ The above points mentioned are the basic features of this project.
   1. [Ray Casting.](https://youtu.be/TOEi6T2mtHo)
   2. [How to use tensorflow.js](https://www.youtube.com/playlist?list=PLRqwX-V7Uu6YIeVA3dNxbR9PYj4wV31oQ)
   3. [The actual "putting together" of everything learnt thus far.](https://youtu.be/mXDrH0wStHs)
-* Coding Bullet  
+* Code Bullet  
   [A 16 minute gist of everything to be done.](https://youtu.be/r428O_CMcpI)
