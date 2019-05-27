@@ -15,4 +15,5 @@ The above points mentioned are the basic features of this project.
   2. [How to use tensorflow.js](https://www.youtube.com/playlist?list=PLRqwX-V7Uu6YIeVA3dNxbR9PYj4wV31oQ)
   3. [The actual "putting together" of everything learnt thus far.](https://youtu.be/mXDrH0wStHs)
 * Code Bullet  
-  [A 16 minute gist of everything to be done.](https://youtu.be/r428O_CMcpI)
+  [A 16 minute gist of everything to be done.](https://youtu.be/r428O_CMcpI)  
+Select the testing branch to check progress. 
